@@ -150,12 +150,12 @@ function FixedTextLayer({
                 className="absolute left-1/2 top-1/2 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2"
                 style={{ opacity, y }}
               >
-                <div className="mb-6 overflow-clip font-mono text-xs uppercase tracking-[0.28em] text-neutral-400">
+                <div className="mb-6 overflow-clip font-mono text-xs uppercase tracking-[0.28em] text-neutral-500">
                   <MaskedLine t={t}>{c.subtitle}</MaskedLine>
                 </div>
 
                 <h2
-                  className="font-medium tracking-tight text-white"
+                  className="font-medium tracking-tight text-neutral-900"
                   style={{
                     fontSize: "clamp(28px, 3.4vw, 52px)",
                     lineHeight: 1.02,
@@ -173,7 +173,7 @@ function FixedTextLayer({
                   ))}
                 </h2>
 
-                <div className="mx-auto mt-6 max-w-xl overflow-clip text-sm leading-relaxed text-neutral-300 md:text-base">
+                <div className="mx-auto mt-6 max-w-xl overflow-clip text-sm leading-relaxed text-neutral-700 md:text-base">
                   <MaskedLine t={t} delay={0.08} className="text-balance">
                     {renderHighlightText(c.text, c.highlight)}
                   </MaskedLine>
@@ -197,7 +197,7 @@ function renderHighlightText(text: string, highlight: string) {
         <React.Fragment key={idx}>
           {p}
           {idx < parts.length - 1 && (
-            <span className="text-blue-400 font-medium">{highlight}</span>
+            <span className="text-blue-600 font-medium">{highlight}</span>
           )}
         </React.Fragment>
       ))}
@@ -218,10 +218,10 @@ function PlayButtonLayer({
           onClick={() => setIsPlaying(!isPlaying)}
           className="inline-flex items-center gap-4 group hover:scale-105 transition-transform duration-300"
         >
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white/40 flex items-center justify-center group-hover:border-white/60 transition-colors bg-black/20 backdrop-blur-sm">
+          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-neutral-900/20 flex items-center justify-center group-hover:border-neutral-900/40 transition-colors bg-white/20 backdrop-blur-sm">
             {isPlaying ? (
                <svg 
-               className="w-6 h-6 md:w-8 md:h-8 text-white" 
+               className="w-6 h-6 md:w-8 md:h-8 text-neutral-900" 
                fill="currentColor" 
                viewBox="0 0 24 24"
              >
@@ -230,7 +230,7 @@ function PlayButtonLayer({
              </svg>
             ) : (
               <svg 
-                className="w-6 h-6 md:w-8 md:h-8 text-white ml-1" 
+                className="w-6 h-6 md:w-8 md:h-8 text-neutral-900 ml-1" 
                 fill="currentColor" 
                 viewBox="0 0 24 24"
               >
@@ -238,7 +238,7 @@ function PlayButtonLayer({
               </svg>
             )}
           </div>
-          <span className="text-lg md:text-xl font-light text-white">
+          <span className="text-lg md:text-xl font-light text-neutral-900">
             {isPlaying ? "Pause podkast" : "Hør på podkasten"}
           </span>
         </button>
@@ -274,7 +274,7 @@ export function ScrollStory() {
   });
 
   return (
-    <section className="relative w-full bg-neutral-950 text-white">
+    <section className="relative w-full bg-white text-neutral-950">
         <div className="relative mx-auto max-w-[100vw]">
           <div ref={containerRef} className="relative">
             {/* Sticky container for the "fixed" layers */}
@@ -294,15 +294,15 @@ export function ScrollStory() {
           </div>
           
           {/* Collaborators Section */}
-          <div className="sticky top-0 h-screen bg-neutral-950 flex flex-col justify-center items-center px-6 text-center">
+          <div className="sticky top-0 h-screen bg-white flex flex-col justify-center items-center px-6 text-center">
             <h3 className="text-neutral-500 uppercase tracking-widest text-sm mb-8">Samarbeidspartnere</h3>
-            <div className="flex flex-wrap justify-center gap-8 text-neutral-300 max-w-4xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-8 text-neutral-800 max-w-4xl mx-auto">
               <p>Astrid Folkedal Kraidy (Nansen Fredssenter)</p>
               <p>Stephan Lyngved (Flink Pike Podcast Production)</p>
               <p>Hanna Filomen Mjåvatn</p>
               <p>Mariko Miyata</p>
             </div>
-            <div className="mt-16 text-neutral-600 text-sm">
+            <div className="mt-16 text-neutral-400 text-sm">
               <p>Foto: Marte Aas, Hilde Malme</p>
             </div>
           </div>
