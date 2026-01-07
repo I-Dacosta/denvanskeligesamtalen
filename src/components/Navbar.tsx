@@ -65,25 +65,25 @@ export function Navbar() {
                   transition={{ delay: 0.3, duration: 0.8 }}
                 >
                   <h2 className="text-xs md:text-sm text-neutral-500 uppercase tracking-widest mb-6">Om Prosjektet</h2>
-                  <h1 className="text-4xl md:text-6xl font-light mb-8 text-neutral-900">The Difficult Conversation</h1>
-                  <p className="text-xl md:text-2xl font-light text-neutral-600 mb-8">Podcast – work in progress</p>
+                  <h1 className="text-4xl md:text-6xl font-light mb-8 text-neutral-900">Den vanskelige samtalen</h1>
+                  <p className="text-xl md:text-2xl font-light text-neutral-600 mb-8">Podkast – work in progress</p>
                   
                   <div className="space-y-6 text-base md:text-lg font-light leading-relaxed text-neutral-700">
                     <p>
-                      «The Difficult Conversation» is an artistic project that originates from a deep crisis in communication between two friends and colleagues, Unni Gjertsen and Runa Carlsen.
+                      «Den vanskelige samtalen» er et kunstnerisk prosjekt som springer ut av en dyp kommunikasjonskrise mellom to venner og kollegaer, Unni Gjertsen og Runa Carlsen.
                     </p>
                     <p>
-                      Arriving from contrasting backgrounds and perspectives on the Israeli-Palestinian conflict, with help from Nansen Fredssenter, they explore dialogue as a tool for avoiding silence and ghosting.
+                      Med utgangspunkt i ulike bakgrunner og perspektiver på den israelsk-palestinske konflikten utforsker de, med hjelp fra Nansen Fredssenter, dialog som et verktøy for å unngå stillhet og ghosting.
                     </p>
                     <p>
-                      Central to the project are seven podcast episodes, each designed to foster open, honest, and challenging conversations. Without the pressure to reach consensus, the dialogues delve into themes such as identity, trauma, polarization, and critical thinking.
+                      Kjernen i prosjektet er syv podkastepisoder, hver med mål om å fremme åpne, ærlige og utfordrende samtaler. Uten press om å oppnå enighet går dialogene i dybden på temaer som identitet, traumer, polarisering og kritisk tenkning.
                     </p>
                   </div>
 
                   <div className="mt-12 pt-12 border-t border-neutral-200">
-                    <h3 className="text-xs text-neutral-500 uppercase tracking-widest mb-4">Collaborators</h3>
+                    <h3 className="text-xs text-neutral-500 uppercase tracking-widest mb-4">Samarbeidspartnere</h3>
                     <p className="text-sm text-neutral-600 leading-relaxed">
-                      Astrid Folkedal Kraidy (Nansen Fredssenter), Stephan Lyngved (Flink Pike Podcast Production), performance artists Hanna Filomen Mjåvatn and Mariko Miyata.
+                      Astrid Folkedal Kraidy (Nansen Fredssenter), Stephan Lyngved (Flink Pike Podcast Production), performance kunstnere Hanna Filomen Mjåvatn og Mariko Miyata.
                     </p>
                   </div>
                 </motion.div>
@@ -99,11 +99,11 @@ export function Navbar() {
                   transition={{ delay: 0.5, duration: 0.8 }}
                 >
                   <h3 className="text-2xl font-light text-neutral-900 mb-2">Unni Gjertsen</h3>
-                  <p className="text-sm text-neutral-500 uppercase tracking-wider mb-6">Visual artist, filmmaker, and writer</p>
+                  <p className="text-sm text-neutral-500 uppercase tracking-wider mb-6">Billedkunstner, filmskaper og forfatter</p>
                   
                   <div className="space-y-4 text-sm md:text-base font-light text-neutral-600 leading-relaxed mb-8">
                     <p>
-                      Unni Gjertsen (b. 1966, Norway) is a visual artist, filmmaker, and writer based in Oslo. Her interdisciplinary practice explores how we perceive geography and history, often employing ecological and feminist perspectives. She uses film, performance, text, and installation to explore how narratives about place and history are constructed and experienced.
+                      Unni Gjertsen (f. 1966, Norge) er en billedkunstner, filmskaper og forfatter basert i Oslo. Hennes tverrfaglige praksis utforsker hvordan vi oppfatter geografi og historie, ofte ved å bruke økologiske og feministiske perspektiver. Hun bruker film, performance, tekst og installasjon til å utforske hvordan narrativer om sted og historie blir konstruert og erfart.
                     </p>
                   </div>
                   
@@ -121,14 +121,14 @@ export function Navbar() {
                   transition={{ delay: 0.6, duration: 0.8 }}
                 >
                   <h3 className="text-2xl font-light text-neutral-900 mb-2">Runa Carlsen</h3>
-                  <p className="text-sm text-neutral-500 uppercase tracking-wider mb-6">Visual artist</p>
+                  <p className="text-sm text-neutral-500 uppercase tracking-wider mb-6">Billedkunstner</p>
                   
                   <div className="space-y-4 text-sm md:text-base font-light text-neutral-600 leading-relaxed mb-8">
                     <p>
-                      Jeg er interessert i tekstil som materiale og dens historie og hvordan det er uløselig forbundet med komplekse strukturer i samfunnet. Jeg arbeider på tvers av tekstil, performance, film, tekst, installasjon og intervensjoner i sosiale situasjoner og offentlige rom.
+                      Jeg er interessert i tekstil som materiale og dets historie og hvordan det er uløselig forbundet med komplekse strukturer i samfunnet. Jeg arbeider på tvers av tekstil, performance, film, tekst, installasjon og intervensjoner i sosiale situasjoner og offentlige rom.
                     </p>
                     <p>
-                      Jeg bruker en stedssensitiv tilnærming og samarbeid som metode i mine estetiske undersøkelser. I noen arbeider fletter jeg biografisk materiale sammen med funn fra offentlige arkiv, for å bøte på som har falt ut vårt kollektive minnet.
+                      Jeg bruker en stedssensitiv tilnærming og samarbeid som metode i mine estetiske undersøkelser. I noen arbeider fletter jeg biografisk materiale sammen med funn fra offentlige arkiv, for å bøte på det som har falt ut av vårt kollektive minne.
                     </p>
                   </div>
                   
