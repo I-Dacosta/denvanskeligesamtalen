@@ -11,6 +11,9 @@ importers:
       '@payloadcms/db-sqlite':
         specifier: ^3.69.0
         version: 3.69.0(payload@3.69.0(graphql@16.12.0)(typescript@5.9.3))
+      '@payloadcms/graphql':
+        specifier: ^3.70.0
+        version: 3.70.0(graphql@16.12.0)(payload@3.69.0(graphql@16.12.0)(typescript@5.9.3))(typescript@5.9.3)
       '@payloadcms/next':
         specifier: ^3.69.0
         version: 3.69.0(@types/react@19.2.7)(graphql@16.12.0)(monaco-editor@0.55.1)(next@16.1.1(@babel/core@7.28.5)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.69.0(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
@@ -1178,6 +1181,13 @@ packages:
     peerDependencies:
       graphql: ^16.8.1
       payload: 3.69.0
+
+  '@payloadcms/graphql@3.70.0':
+    resolution: {integrity: sha512-awT25IHRqNWZvTlFfx8m9YvRyQ4x8u2YEahULkiQ6jcaxEiFKoWe9j9Shb2j3AHf/IzexdU1k5XV/8p92cFKog==}
+    hasBin: true
+    peerDependencies:
+      graphql: ^16.8.1
+      payload: 3.70.0
 
   '@payloadcms/next@3.69.0':
     resolution: {integrity: sha512-rkj/wvTDcbOkb8+v4jkZVdoJm2tvPUQL62CWoGnysy/ST+ZUwMr/70veLB7Ztr3uj6HKi6dU+31H+gG94UaMZg==}
@@ -4710,6 +4720,17 @@ snapshots:
       - sqlite3
 
   '@payloadcms/graphql@3.69.0(graphql@16.12.0)(payload@3.69.0(graphql@16.12.0)(typescript@5.9.3))(typescript@5.9.3)':
+    dependencies:
+      graphql: 16.12.0
+      graphql-scalars: 1.22.2(graphql@16.12.0)
+      payload: 3.69.0(graphql@16.12.0)(typescript@5.9.3)
+      pluralize: 8.0.0
+      ts-essentials: 10.0.3(typescript@5.9.3)
+      tsx: 4.20.6
+    transitivePeerDependencies:
+      - typescript
+
+  '@payloadcms/graphql@3.70.0(graphql@16.12.0)(payload@3.69.0(graphql@16.12.0)(typescript@5.9.3))(typescript@5.9.3)':
     dependencies:
       graphql: 16.12.0
       graphql-scalars: 1.22.2(graphql@16.12.0)
