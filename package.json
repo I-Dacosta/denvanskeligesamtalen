@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "generate:importmap": "payload generate:importmap"
   },
   "dependencies": {
-    "@payloadcms/db-sqlite": "^3.69.0",
+    "@payloadcms/db-mongodb": "^3.70.0",
     "@payloadcms/graphql": "^3.70.0",
     "@payloadcms/next": "^3.69.0",
     "@payloadcms/richtext-lexical": "^3.69.0",

@@ -1,6 +1,6 @@
 import sharp from 'sharp'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -17,6 +17,14 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    autoLogin:
+      process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true'
+        ? {
+            email: 'dev@payloadcms.com',
+            password: 'test',
+            prefillOnly: true,
+          }
+        : false,
   },
   
   // Define your collections here
@@ -142,11 +150,9 @@ export default buildConfig({
   // Secret for JWT encryption
   secret: process.env.PAYLOAD_SECRET || 'your-secret-key-here-change-in-production',
   
-  // Database adapter (SQLite for local development)
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URL || `file:${path.join(dirname, 'payload.db')}`,
-    },
+  // Database adapter (MongoDB Atlas)
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI || 'mongodb://localhost:27017/denvanskeligesamtalen',
   }),
   
   // Sharp for image processing
