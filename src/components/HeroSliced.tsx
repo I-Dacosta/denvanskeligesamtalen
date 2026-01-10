@@ -55,11 +55,30 @@ export function HeroSliced() {
              <div className="flex items-center gap-4">
                 <span className="text-neutral-400">04</span>
                 <div className="h-[1px] w-8 bg-neutral-300"></div>
-                <span>Theater</span>
+                <span>Teater</span>
              </div>
-             <div className="relative right-8, top-13">
-             <Image src="/images/fritt-ord.png" alt="Fritt Ord Logo" width={100} height={100} />
-              </div>
+           </motion.div>
+
+           <motion.div 
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             transition={{ delay: 0.8, duration: 1 }}
+             className="mt-16 pt-8 border-t border-neutral-200"
+           >
+             <p className="text-xs text-neutral-400 uppercase tracking-wider mb-3">Støttet av</p>
+             <div className="flex items-center gap-4">
+               <Image 
+                 src="/images/fritt-ord.png" 
+                 alt="Fritt Ord Logo" 
+                 width={80} 
+                 height={80}
+                 className="opacity-80 hover:opacity-100 transition-opacity"
+               />
+               <div className="flex flex-col">
+                 <span className="text-sm font-semibold text-neutral-700">Fritt Ord</span>
+                 <span className="text-xs text-neutral-500">Stiftelsen</span>
+               </div>
+             </div>
            </motion.div>
         </div>
 
