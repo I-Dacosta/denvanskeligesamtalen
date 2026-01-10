@@ -10,11 +10,11 @@ export function HeroSliced() {
   const offsets = ["0%", "1%", "-1%", "1%", "-1%"];
   
   return (
-    <section className="relative min-h-screen w-full bg-white text-neutral-950 flex items-center justify-center p-6 md:p-12 overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-7xl h-full items-center">
+    <section className="relative min-h-screen w-full bg-white text-neutral-950 flex items-center justify-center p-4 md:px-12 md:py-20 overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 w-full max-w-7xl h-full items-start">
         
         {/* Typography Left */}
-        <div className="flex flex-col justify-top h-full z-20 order-2 lg:order-1">
+        <div className="flex flex-col h-full z-20 order-2 lg:order-1">
            <motion.div
              initial={{ opacity: 0, x: -50 }}
              animate={{ opacity: 1, x: 0 }}
@@ -83,7 +83,7 @@ export function HeroSliced() {
         </div>
 
         {/* Sliced Image Right */}
-        <div className="relative w-full flex flex-col order-1 lg:order-2 -mt-12 md:mt-0">
+        <div className="relative w-full flex flex-col order-1 lg:order-2">
           <div className="relative w-full h-[60vh] md:h-[80vh] flex flex-col gap-[5px]">
             {[...Array(slices)].map((_, i) => (
               <motion.div 
@@ -112,7 +112,7 @@ export function HeroSliced() {
               </motion.div>
             ))}
           </div>
-          <p className="relative bottom-10 mt-16 text-neutral-400 text-sm">Foto: Marte Aas</p>
+          <p className="mt-1 md:mt-2 text-neutral-400 text-sm">Foto: Marte Aas</p>
         </div>
       </div>
     </section>
