@@ -14,7 +14,7 @@ export function Navbar() {
         <div className="text-[10px] md:text-sm font-bold tracking-widest uppercase leading-none md:leading-normal">
           {/* Optional Logo or Home Link */}
           <Link href="/" className="hover:opacity-70 transition-opacity">
-            Den<br className="md:hidden" /> Vanskelige<br className="md:hidden" /> Samtalen
+            
           </Link>
         </div>
         
@@ -22,11 +22,11 @@ export function Navbar() {
           onClick={() => setIsOpen(true)}
           className="group flex items-center gap-2 text-[10px] md:text-sm font-bold tracking-widest uppercase leading-none md:leading-normal hover:opacity-70 transition-opacity"
         >
-          <span>Om Prosjektet</span>
-          <div className="flex flex-col gap-[4px] md:gap-[6px] w-5 md:w-6">
-            <span className="block w-full h-[1px] bg-neutral-950 group-hover:w-3/4 transition-all ml-auto" />
-            <span className="block w-full h-[1px] bg-neutral-950" />
-            <span className="block w-full h-[1px] bg-neutral-950 group-hover:w-1/2 transition-all ml-auto" />
+          <span></span>
+          <div className="flex flex-col gap-[10px] md:gap-[12px] w-15 md:w-17">
+            <span className="block w-full h-[3px] bg-neutral-950 group-hover:w-3/4 transition-all ml-auto" />
+            <span className="block w-full h-[3px] bg-neutral-950" />
+            <span className="block w-full h-[3px] bg-neutral-950 group-hover:w-1/2 transition-all ml-auto" />
           </div>
         </button>
       </nav>
@@ -125,10 +125,9 @@ export function Navbar() {
                   
                   <div className="space-y-4 text-sm md:text-base font-light text-neutral-600 leading-relaxed mb-8">
                     <p>
-                      Jeg er interessert i tekstil som materiale og dets historie og hvordan det er uløselig forbundet med komplekse strukturer i samfunnet. Jeg arbeider på tvers av tekstil, performance, film, tekst, installasjon og intervensjoner i sosiale situasjoner og offentlige rom.
-                    </p>
+                      Jeg undersøker hvordan sosiale og historiske strukturer former fellesskap, solidaritet og identitet. Over tid har jeg arbeidet med hvordan tekstil som materiale er tett knyttet til samfunnets økonomiske og økologiske systemer – fra antropocen til kolonialisme og kapitalisme.  </p>
                     <p>
-                      Jeg bruker en stedssensitiv tilnærming og samarbeid som metode i mine estetiske undersøkelser. I noen arbeider fletter jeg biografisk materiale sammen med funn fra offentlige arkiv, for å bøte på det som har falt ut av vårt kollektive minne.
+                      Jeg arbeider på tvers av medier, hovedsakelig med tekstil, performance og video, og bruker dokumentariske, stedssensitive og relasjonelle strategier. Samarbeid med andre kunstnere og fagpersoner er en sentral del av min praksis. Jeg ønsker at arbeidene mine skal åpne for refleksjon, handling – og i siste instans, endring.                   
                     </p>
                   </div>
                   

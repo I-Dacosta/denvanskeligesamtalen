@@ -27,18 +27,19 @@ const chapters: Chapter[] = [
   },
   {
     id: "chapter-2",
-    subtitle: "Dialog",
+    subtitle: "Podkast",
     titleLines: ["Å unngå", "stillhet"],
     text: "Med ulike bakgrunner og perspektiver på Israel-Palestina-konflikten, og med hjelp fra Nansen Fredssenter, utforsker de dialog som et verktøy for å unngå stillhet og 'ghosting'.",
     highlight: "unngå stillhet",
   },
   {
     id: "chapter-3",
-    subtitle: "Podkast",
-    titleLines: ["Syv", "Episoder"],
-    text: "Sentralt i prosjektet er syv podkastepisoder, hver utformet for å fremme åpne, ærlige og utfordrende samtaler. Uten press om å oppnå enighet, dykker dialogene ned i temaer som identitet, traumer, polarisering og kritisk tenkning.",
+    subtitle: "Performance",
+    titleLines: ["Åtte", "Episoder"],
+    text: "Sentralt i prosjektet er åtte podkastepisoder, hver utformet for å fremme åpne, ærlige og utfordrende samtaler. Uten press om å oppnå enighet, dykker dialogene ned i temaer som identitet, traumer, polarisering og kritisk tenkning.",
     highlight: "utfordrende samtaler",
   },
+  
 ];
 
 const CHAPTER_WEIGHTS = [1.1, 0.8, 0.6];
@@ -297,13 +298,8 @@ export function ScrollStory() {
           <div className="sticky top-0 h-screen bg-white flex flex-col justify-center items-center px-6 text-center">
             <h3 className="text-neutral-500 uppercase tracking-widest text-sm mb-8">Samarbeidspartnere</h3>
             <div className="flex flex-wrap justify-center gap-8 text-neutral-800 max-w-4xl mx-auto">
-              <p>Astrid Folkedal Kraidy (Nansen Fredssenter)</p>
-              <p>Stephan Lyngved (Flink Pike Podcast Production)</p>
-              <p>Hanna Filomen Mjåvatn</p>
-              <p>Mariko Miyata</p>
-            </div>
-            <div className="mt-16 text-neutral-400 text-sm">
-              <p>Foto: Marte Aas, Hilde Malme</p>
+              <p>Co Producent: ProductionSelskapet Konsept AS</p>
+              <p>Nansen Fredssenter Lillehammer</p>
             </div>
           </div>
           
