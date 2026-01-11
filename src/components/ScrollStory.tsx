@@ -17,7 +17,17 @@ type Chapter = {
   highlight: string;
 };
 
-const chapters: Chapter[] = [
+type ChapterData = {
+  order: number;
+  subtitle: string;
+  titleLine1: string;
+  titleLine2: string;
+  text: string;
+  highlight: string;
+  weight: number;
+};
+
+const defaultChapters: Chapter[] = [
   {
     id: "chapter-1",
     subtitle: "Bakgrunn",
@@ -39,26 +49,16 @@ const chapters: Chapter[] = [
     text: "Sentralt i prosjektet er åtte podkastepisoder, hver utformet for å fremme åpne, ærlige og utfordrende samtaler. Uten press om å oppnå enighet, dykker dialogene ned i temaer som identitet, traumer, polarisering og kritisk tenkning.",
     highlight: "utfordrende samtaler",
   },
-  
 ];
-
-const CHAPTER_WEIGHTS = [1.1, 0.8, 0.6];
-const TOTAL_WEIGHT = CHAPTER_WEIGHTS.reduce((a, b) => a + b, 0);
-
-const CHAPTER_RANGES = CHAPTER_WEIGHTS.reduce((acc, weight, i) => {
-  const start = i === 0 ? 0 : acc[i - 1][1];
-  const end = start + weight / TOTAL_WEIGHT;
-  acc.push([start, end]);
-  return acc;
-}, [] as [number, number][]);
 
 function useChapterT(
   scrollYProgress: MotionValue<number>,
-  index: number
+  index: number,
+  chapterRanges: [number, number][]
 ) {
-  const [start, end] = CHAPTER_RANGES[index];
+  const [start, end] = chapterRanges[index];
   const duration = end - start;
-  const isLast = index === CHAPTER_RANGES.length - 1;
+  const isLast = index === chapterRanges.length - 1;
 
   const t = useTransform(scrollYProgress, [start, end], [0, 1], {
     clamp: true,
@@ -122,8 +122,12 @@ function MaskedLine({
 
 function FixedTextLayer({
   scrollYProgress,
+  chapters,
+  chapterRanges,
 }: {
   scrollYProgress: MotionValue<number>;
+  chapters: Chapter[];
+  chapterRanges: [number, number][];
 }) {
   return (
     <div className="pointer-events-none absolute inset-0 h-full w-full z-20">
@@ -132,7 +136,8 @@ function FixedTextLayer({
           {chapters.map((c, i) => {
             const { t, opacity } = useChapterT(
               scrollYProgress,
-              i
+              i,
+              chapterRanges
             );
 
             const defaultY = useTransform(t, [0, 0.5, 1], ["14px", "0px", "-14px"], {
@@ -248,7 +253,7 @@ function PlayButtonLayer({
 }
 
 
-function ScrollListScaffold() {
+function ScrollListScaffold({ chapters }: { chapters: Chapter[] }) {
   return (
     <ul
       className="relative flex flex-col gap-0 pb-32 pt-16 lg:pb-24 lg:pt-24"
@@ -266,8 +271,53 @@ function ScrollListScaffold() {
   );
 }
 
-export function ScrollStory() {
+export function ScrollStory({ data }: { data?: ChapterData[] }) {
   const containerRef = React.useRef<HTMLDivElement>(null);
+
+  // Convert ChapterData to Chapter format and compute weights
+  const chapters: Chapter[] = React.useMemo(() => {
+    const sourceData = data || defaultChapters.map((ch, idx) => ({
+      order: idx + 1,
+      subtitle: ch.subtitle,
+      titleLine1: ch.titleLines[0],
+      titleLine2: ch.titleLines[1],
+      text: ch.text,
+      highlight: ch.highlight,
+      weight: idx === 0 ? 1.1 : idx === 1 ? 0.8 : 0.6,
+    }));
+
+    return sourceData
+      .sort((a, b) => a.order - b.order)
+      .map((ch) => ({
+        id: `chapter-${ch.order}`,
+        subtitle: ch.subtitle,
+        titleLines: [ch.titleLine1, ch.titleLine2],
+        text: ch.text,
+        highlight: ch.highlight,
+      }));
+  }, [data]);
+
+  const CHAPTER_WEIGHTS = React.useMemo(() => {
+    const sourceData = data || defaultChapters.map((_, idx) => ({
+      order: idx + 1,
+      subtitle: '',
+      titleLine1: '',
+      titleLine2: '',
+      text: '',
+      highlight: '',
+      weight: idx === 0 ? 1.1 : idx === 1 ? 0.8 : 0.6,
+    }));
+    return sourceData.map(ch => ch.weight);
+  }, [data]);
+
+  const TOTAL_WEIGHT = CHAPTER_WEIGHTS.reduce((a, b) => a + b, 0);
+
+  const CHAPTER_RANGES = CHAPTER_WEIGHTS.reduce((acc, weight, i) => {
+    const start = i === 0 ? 0 : acc[i - 1][1];
+    const end = start + weight / TOTAL_WEIGHT;
+    acc.push([start, end]);
+    return acc;
+  }, [] as [number, number][]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -281,7 +331,7 @@ export function ScrollStory() {
             {/* Sticky container for the "fixed" layers */}
             <div className="sticky top-0 h-screen overflow-hidden">
                <div className="pointer-events-none absolute inset-0">
-                 <FixedTextLayer scrollYProgress={scrollYProgress} />
+                 <FixedTextLayer scrollYProgress={scrollYProgress} chapters={chapters} chapterRanges={CHAPTER_RANGES} />
                </div>
                <div className="pointer-events-auto absolute inset-0">
                  <PlayButtonLayer scrollYProgress={scrollYProgress} />
@@ -290,7 +340,7 @@ export function ScrollStory() {
 
             {/* Scroll-driver scaffold (ul/li) */}
             <div className="-mt-[100vh]">
-               <ScrollListScaffold />
+               <ScrollListScaffold chapters={chapters} />
             </div>
           </div>
           

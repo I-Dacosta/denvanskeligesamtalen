@@ -4,10 +4,48 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 
-export function HeroSliced() {
+type HeroData = {
+  hero: {
+    subtitle: string;
+    mainTitle: string;
+    description: string;
+    image?: { url: string; alt: string };
+    imageCredit?: string;
+  };
+  navigationItems: Array<{ number: string; label: string }>;
+  sponsor: {
+    heading: string;
+    logo?: { url: string; alt: string };
+    name: string;
+    subtitle: string;
+  };
+};
+
+export function HeroSliced({ data }: { data?: HeroData }) {
   const slices = 5;
   // Horizontal offsets to create a "broken" staggered effect
   const offsets = ["0%", "1%", "-1%", "1%", "-1%"];
+  
+  // Fallback to default values if no data provided
+  const heroData = data || {
+    hero: {
+      subtitle: "Unni Gjertsen & Runa Carlsen",
+      mainTitle: "DEN\nVANSKELIGE\nSAMTALEN",
+      description: "En kunstnerisk utforskning av dialogens potensiale.",
+      imageCredit: "Foto: Marte Aas",
+    },
+    navigationItems: [
+      { number: "01", label: "Om Prosjektet" },
+      { number: "02", label: "Podkast" },
+      { number: "03", label: "Performance" },
+      { number: "04", label: "Teater" },
+    ],
+    sponsor: {
+      heading: "Støttet av",
+      name: "Fritt Ord",
+      subtitle: "Stiftelsen",
+    },
+  };
   
   return (
     <section className="relative min-h-screen w-full bg-white text-neutral-950 flex items-center justify-center p-4 md:px-12 md:py-20 overflow-hidden">
@@ -21,13 +59,18 @@ export function HeroSliced() {
              transition={{ duration: 0.8, ease: "easeOut" }}
            >
              <h2 className="text-sm md:text-base font-bold tracking-[0.2em] text-neutral-500 uppercase mb-6">
-                Unni Gjertsen & Runa Carlsen
+                {heroData.hero.subtitle}
              </h2>
              <h1 className="text-5xl md:text-6xl xl:text-8xl font-bold uppercase tracking-tighter leading-[0.85] text-neutral-900">
-               DEN<br/>VANSKELIGE<br/>SAMTALEN
+               {heroData.hero.mainTitle.split('\n').map((line, i) => (
+                 <React.Fragment key={i}>
+                   {line}
+                   {i < heroData.hero.mainTitle.split('\n').length - 1 && <br />}
+                 </React.Fragment>
+               ))}
              </h1>
              <p className="mt-10 text-lg md:text-xl text-neutral-600 max-w-md font-light leading-relaxed">
-               En kunstnerisk utforskning av dialogens potensiale.
+               {heroData.hero.description}
              </p>
            </motion.div>
 
@@ -37,26 +80,13 @@ export function HeroSliced() {
              transition={{ delay: 0.5, duration: 1 }}
              className="mt-16 flex flex-col gap-3 text-xs md:text-sm text-neutral-500 uppercase tracking-widest font-mono"
            >
-             <div className="flex items-center gap-4">
-                <span className="text-neutral-400">01</span>
-                <div className="h-[1px] w-8 bg-neutral-300"></div>
-                <span>Om Prosjektet</span>
-             </div>
-             <div className="flex items-center gap-4">
-                <span className="text-neutral-400">02</span>
-                <div className="h-[1px] w-8 bg-neutral-300"></div>
-                <span>Podkast</span>
-             </div>
-             <div className="flex items-center gap-4">
-                <span className="text-neutral-400">03</span>
-                <div className="h-[1px] w-8 bg-neutral-300"></div>
-                <span>Performance</span>
-             </div>
-             <div className="flex items-center gap-4">
-                <span className="text-neutral-400">04</span>
-                <div className="h-[1px] w-8 bg-neutral-300"></div>
-                <span>Teater</span>
-             </div>
+             {heroData.navigationItems.map((item) => (
+               <div key={item.number} className="flex items-center gap-4">
+                  <span className="text-neutral-400">{item.number}</span>
+                  <div className="h-[1px] w-8 bg-neutral-300"></div>
+                  <span>{item.label}</span>
+               </div>
+             ))}
            </motion.div>
 
            <motion.div 
@@ -65,18 +95,34 @@ export function HeroSliced() {
              transition={{ delay: 0.8, duration: 1 }}
              className="mt-16 pt-8 border-t border-neutral-200"
            >
-             <p className="text-xs text-neutral-400 uppercase tracking-wider mb-3">Støttet av</p>
+             <p className="text-xs text-neutral-400 uppercase tracking-wider mb-3">
+               {heroData.sponsor.heading}
+             </p>
              <div className="flex items-center gap-4">
-               <Image 
-                 src="/images/fritt-ord.png" 
-                 alt="Fritt Ord Logo" 
-                 width={80} 
-                 height={80}
-                 className="opacity-80 hover:opacity-100 transition-opacity"
-               />
+               {heroData.sponsor.logo ? (
+                 <Image 
+                   src={heroData.sponsor.logo.url} 
+                   alt={heroData.sponsor.logo.alt || heroData.sponsor.name} 
+                   width={80} 
+                   height={80}
+                   className="opacity-80 hover:opacity-100 transition-opacity"
+                 />
+               ) : (
+                 <Image 
+                   src="/images/fritt-ord.png" 
+                   alt="Fritt Ord Logo" 
+                   width={80} 
+                   height={80}
+                   className="opacity-80 hover:opacity-100 transition-opacity"
+                 />
+               )}
                <div className="flex flex-col">
-                 <span className="text-sm font-semibold text-neutral-700">Fritt Ord</span>
-                 <span className="text-xs text-neutral-500">Stiftelsen</span>
+                 <span className="text-sm font-semibold text-neutral-700">
+                   {heroData.sponsor.name}
+                 </span>
+                 <span className="text-xs text-neutral-500">
+                   {heroData.sponsor.subtitle}
+                 </span>
                </div>
              </div>
            </motion.div>
@@ -101,8 +147,8 @@ export function HeroSliced() {
                    }}
                  >
                    <Image
-                     src="/images/walking.png"
-                     alt="Walking Sliced"
+                     src={heroData.hero.image?.url || "/images/walking.png"}
+                     alt={heroData.hero.image?.alt || "Walking Sliced"}
                      fill
                      className="object-cover grayscale contrast-125"
 
@@ -112,7 +158,9 @@ export function HeroSliced() {
               </motion.div>
             ))}
           </div>
-          <p className="mt-1 md:mt-2 text-neutral-400 text-sm">Foto: Marte Aas</p>
+          {heroData.hero.imageCredit && (
+            <p className="mt-1 md:mt-2 text-neutral-400 text-sm">{heroData.hero.imageCredit}</p>
+          )}
         </div>
       </div>
     </section>

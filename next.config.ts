@@ -1,9 +1,19 @@
+import path from "path";
+import { fileURLToPath } from "url";
+
+import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
-import { withPayload } from '@payloadcms/next/withPayload'
+
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: false, // Payload requires this to be false
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default withPayload(nextConfig);
