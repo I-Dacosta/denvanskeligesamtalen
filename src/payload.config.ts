@@ -43,7 +43,14 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN || "",
     }),
   ],
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}`
-    : 'http://localhost:3000',
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'),
+  cors: [
+    process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+    'https://denvanskeligesamtalen.org',
+  ].filter(Boolean),
+  csrf: [
+    process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000', 
+    'https://denvanskeligesamtalen.org',
+  ].filter(Boolean),
 });
