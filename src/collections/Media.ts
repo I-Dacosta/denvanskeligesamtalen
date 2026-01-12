@@ -12,5 +12,8 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    staticDir: process.env.VERCEL ? undefined : 'public/media',
+    disableLocalStorage: !!process.env.VERCEL,
+  },
 }
