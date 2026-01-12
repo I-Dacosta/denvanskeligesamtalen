@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
+  // Force clean build
+  experimental: {
+    serverComponentsExternalPackages: ['sharp', 'onnxruntime-node'],
+  },
 };
 
 export default withPayload(nextConfig);
