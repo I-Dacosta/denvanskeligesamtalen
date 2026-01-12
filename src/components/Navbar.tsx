@@ -36,7 +36,7 @@ export function Navbar({ data }: { data?: NavData }) {
         "Kjernen i prosjektet er syv podkastepisoder, hver med mål om å fremme åpne, ærlige og utfordrende samtaler. Uten press om å oppnå enighet går dialogene i dybden på temaer som identitet, traumer, polarisering og kritisk tenkning."
       ],
       partnersHeading: "Samarbeidspartnere",
-      partnersText: "Astrid Folkedal Kraidy (Nansen Fredssenter), Stephan Lyngved (Flink Pike Podcast Production), performance kunstnere Hanna Filomen Mjåvatn og Mariko Miyata."
+      partnersText: "Co Producent: ProductionSelskapet Konsept AS, Nansen Fredssenter Lillehammer."
     },
     artists: [
       {
