@@ -120,6 +120,66 @@ function MaskedLine({
   );
 }
 
+function ChapterText({
+  chapter,
+  index,
+  scrollYProgress,
+  chapterRanges,
+}: {
+  chapter: Chapter;
+  index: number;
+  scrollYProgress: MotionValue<number>;
+  chapterRanges: [number, number][];
+}) {
+  const { t, opacity } = useChapterT(scrollYProgress, index, chapterRanges);
+
+  const defaultY = useTransform(t, [0, 0.5, 1], ["14px", "0px", "-14px"], {
+    clamp: true,
+  });
+
+  const firstY = useTransform(t, [0, 0.85], ["-35vh", "0vh"], {
+    clamp: true,
+  });
+
+  const y = index === 0 ? firstY : defaultY;
+
+  return (
+    <motion.div
+      className="absolute left-1/2 top-1/2 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2"
+      style={{ opacity, y }}
+    >
+      <div className="mb-6 overflow-clip font-mono text-xs uppercase tracking-[0.28em] text-neutral-500">
+        <MaskedLine t={t}>{chapter.subtitle}</MaskedLine>
+      </div>
+
+      <h2
+        className="font-medium tracking-tight text-neutral-900"
+        style={{
+          fontSize: "clamp(28px, 3.4vw, 52px)",
+          lineHeight: 1.02,
+        }}
+      >
+        {chapter.titleLines.map((line, idx) => (
+          <MaskedLine
+            key={idx}
+            t={t}
+            delay={idx * 0.05}
+            className="text-balance"
+          >
+            {line}
+          </MaskedLine>
+        ))}
+      </h2>
+
+      <div className="mx-auto mt-6 max-w-xl overflow-clip text-sm leading-relaxed text-neutral-700 md:text-base">
+        <MaskedLine t={t} delay={0.08} className="text-balance">
+          {renderHighlightText(chapter.text, chapter.highlight)}
+        </MaskedLine>
+      </div>
+    </motion.div>
+  );
+}
+
 function FixedTextLayer({
   scrollYProgress,
   chapters,
@@ -133,60 +193,15 @@ function FixedTextLayer({
     <div className="pointer-events-none absolute inset-0 h-full w-full z-20">
       <div className="flex h-full w-full items-center justify-center px-6">
         <div className="w-full max-w-2xl text-center">
-          {chapters.map((c, i) => {
-            const { t, opacity } = useChapterT(
-              scrollYProgress,
-              i,
-              chapterRanges
-            );
-
-            const defaultY = useTransform(t, [0, 0.5, 1], ["14px", "0px", "-14px"], {
-              clamp: true,
-            });
-
-            const firstY = useTransform(t, [0, 0.85], ["-35vh", "0vh"], {
-              clamp: true,
-            });
-
-            const y = i === 0 ? firstY : defaultY;
-
-            return (
-              <motion.div
-                key={c.id}
-                className="absolute left-1/2 top-1/2 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2"
-                style={{ opacity, y }}
-              >
-                <div className="mb-6 overflow-clip font-mono text-xs uppercase tracking-[0.28em] text-neutral-500">
-                  <MaskedLine t={t}>{c.subtitle}</MaskedLine>
-                </div>
-
-                <h2
-                  className="font-medium tracking-tight text-neutral-900"
-                  style={{
-                    fontSize: "clamp(28px, 3.4vw, 52px)",
-                    lineHeight: 1.02,
-                  }}
-                >
-                  {c.titleLines.map((line, idx) => (
-                    <MaskedLine
-                      key={idx}
-                      t={t}
-                      delay={idx * 0.05}
-                      className="text-balance"
-                    >
-                      {line}
-                    </MaskedLine>
-                  ))}
-                </h2>
-
-                <div className="mx-auto mt-6 max-w-xl overflow-clip text-sm leading-relaxed text-neutral-700 md:text-base">
-                  <MaskedLine t={t} delay={0.08} className="text-balance">
-                    {renderHighlightText(c.text, c.highlight)}
-                  </MaskedLine>
-                </div>
-              </motion.div>
-            );
-          })}
+          {chapters.map((c, i) => (
+            <ChapterText
+              key={c.id}
+              chapter={c}
+              index={i}
+              scrollYProgress={scrollYProgress}
+              chapterRanges={chapterRanges}
+            />
+          ))}
         </div>
       </div>
     </div>
