@@ -4,6 +4,10 @@ import { Navbar } from "@/components/Navbar";
 import { getPayload } from "payload";
 import config from "@payload-config";
 
+// Always render on-demand so Payload CMS edits show up immediately
+// instead of being frozen into a static build on Vercel.
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   let homepage = null;
   let navigation = null;

@@ -23,6 +23,12 @@ type HeroData = {
 
 export function HeroSliced({ data }: { data?: HeroData }) {
   const slices = 5;
+
+  const scrollToChapter = (chapterId: string) => {
+    document
+      .getElementById(chapterId)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   // Horizontal offsets to create a "broken" staggered effect
   const offsets = ["0%", "1%", "-1%", "1%", "-1%"];
   
@@ -80,13 +86,20 @@ export function HeroSliced({ data }: { data?: HeroData }) {
              transition={{ delay: 0.5, duration: 1 }}
              className="mt-16 flex flex-col gap-3 text-xs md:text-sm text-neutral-500 uppercase tracking-widest font-mono"
            >
-             {heroData.navigationItems.map((item) => (
-               <div key={item.number} className="flex items-center gap-4">
-                  <span className="text-neutral-400">{item.number}</span>
-                  <div className="h-[1px] w-8 bg-neutral-300"></div>
-                  <span>{item.label}</span>
-               </div>
-             ))}
+             {heroData.navigationItems
+               .slice(1)
+               .map((item, i) => (
+                 <button
+                   key={item.number}
+                   type="button"
+                   onClick={() => scrollToChapter(`chapter-${i + 1}`)}
+                   className="group flex items-center gap-4 text-left uppercase tracking-widest transition-colors hover:text-neutral-900"
+                 >
+                    <span className="text-neutral-400">{item.number}</span>
+                    <div className="h-[1px] w-8 bg-neutral-300 transition-all group-hover:w-12 group-hover:bg-neutral-900"></div>
+                    <span>{item.label}</span>
+                 </button>
+               ))}
            </motion.div>
 
            <motion.div 
@@ -116,14 +129,6 @@ export function HeroSliced({ data }: { data?: HeroData }) {
                    className="opacity-80 hover:opacity-100 transition-opacity"
                  />
                )}
-               <div className="flex flex-col">
-                 <span className="text-sm font-semibold text-neutral-700">
-                   {heroData.sponsor.name}
-                 </span>
-                 <span className="text-xs text-neutral-500">
-                   {heroData.sponsor.subtitle}
-                 </span>
-               </div>
              </div>
            </motion.div>
         </div>

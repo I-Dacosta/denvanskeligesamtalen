@@ -261,7 +261,8 @@ function ScrollListScaffold({ chapters }: { chapters: Chapter[] }) {
       {chapters.map((c, i) => (
         <li
           key={c.id}
-          className={`relative ${
+          id={c.id}
+          className={`relative scroll-mt-0 ${
             i === chapters.length - 1 ? "min-h-[50vh] lg:min-h-[60vh]" : "min-h-[80vh] lg:min-h-[100vh]"
           }`}
         >
