@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "generate:importmap": "node --import tsx ./node_modules/payload/bin.js generate:importmap",
+    "generate:types": "node --import tsx ./node_modules/payload/bin.js generate:types"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.70.0",
