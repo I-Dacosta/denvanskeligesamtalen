@@ -186,8 +186,8 @@ export function HeroSliced({
                  );
                })}
              </div>
-             <p className="mt-3 text-xs text-neutral-400 uppercase tracking-wider text-center">
-               {heroData.sponsor.footnote || "under utvikling"}
+             <p className="relative top-22 mt-3 text-xs text-neutral-400 uppercase tracking-wider text-center">
+               {heroData.sponsor.footnote || "Webside under utvikling"}
              </p>
              </div>
            </motion.div>

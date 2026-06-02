@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { renderRichText } from "@/lib/renderRichText";
 
 type NavData = {
@@ -32,6 +33,8 @@ export function Navbar({
   pages?: PageLink[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   const navData = data || {
     about: {
@@ -70,10 +73,28 @@ export function Navbar({
       {/* Fixed Navbar */}
       <nav className="relative md:fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 md:px-12 md:py-6 text-neutral-950">
         <div className="text-[10px] md:text-sm font-bold tracking-widest uppercase leading-none md:leading-normal">
-          {/* Optional Logo or Home Link */}
-          <Link href="/" className="hover:opacity-70 transition-opacity">
-            
-          </Link>
+          {/* Home button — shown on every page except the home page */}
+          {!isHome && (
+            <Link
+              href="/"
+              className="group flex items-center gap-2 hover:opacity-70 transition-opacity"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4 md:w-5 md:h-5"
+                aria-hidden="true"
+              >
+                <path d="M3 11.5 12 4l9 7.5" />
+                <path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9" />
+              </svg>
+              <span>Forside</span>
+            </Link>
+          )}
         </div>
         
         <button 

@@ -152,7 +152,7 @@ export const Homepage: CollectionConfig = {
           name: 'footnote',
           type: 'text',
           label: 'Footnote (centered text under logos)',
-          defaultValue: 'under utvikling',
+          defaultValue: 'Webside under utvikling',
         },
         {
           name: 'items',
