@@ -10,6 +10,23 @@ export const Homepage: CollectionConfig = {
   access: {
     read: () => true,
   },
+  hooks: {
+    // Keep navigation numbers sequential (01, 02, 03 …) based on position,
+    // so editors never have to manage them by hand.
+    beforeChange: [
+      ({ data }) => {
+        if (Array.isArray(data?.navigationItems)) {
+          data.navigationItems = data.navigationItems.map(
+            (item: Record<string, unknown>, i: number) => ({
+              ...item,
+              number: String(i + 1).padStart(2, '0'),
+            })
+          )
+        }
+        return data
+      },
+    ],
+  },
   fields: [
     {
       name: 'title',
@@ -102,7 +119,10 @@ export const Homepage: CollectionConfig = {
           name: 'number',
           type: 'text',
           label: 'Number',
-          required: true,
+          admin: {
+            readOnly: true,
+            description: 'Auto-numbered by position (01, 02, 03 …).',
+          },
         },
         {
           name: 'label',
@@ -112,9 +132,9 @@ export const Homepage: CollectionConfig = {
         },
       ],
       defaultValue: [
-        { number: '01', label: 'Podkast' },
-        { number: '02', label: 'Performance' },
-        { number: '03', label: 'Teater' },
+        { label: 'Podkast' },
+        { label: 'Performance' },
+        { label: 'Teater' },
       ],
     },
     {
