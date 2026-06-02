@@ -20,8 +20,12 @@ export const colorField = (
   label,
   admin: {
     placeholder: "#1d4ed8",
-    description: "Hex color e.g. #1d4ed8 or #fff. Leave blank for the default.",
+    description: "Pick a color, or leave blank for the default.",
     ...overrides.admin,
+    components: {
+      Field: "/components/admin/ColorPickerField#ColorPickerField",
+      ...overrides.admin?.components,
+    },
   },
   validate: (value: unknown) => {
     if (!value) return true;

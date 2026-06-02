@@ -366,11 +366,14 @@ export function ScrollStory({ data }: { data?: ChapterData[] }) {
   // scrollIntoView, which would overshoot.
   React.useEffect(() => {
     const handler = (event: Event) => {
-      const index = (event as CustomEvent<number>).detail;
+      const raw = (event as CustomEvent<number>).detail;
       const container = containerRef.current;
       const ranges = rangesRef.current;
-      if (!container || typeof index !== "number" || !ranges[index]) return;
+      if (!container || typeof raw !== "number" || ranges.length === 0) return;
 
+      // More nav buttons than chapters? Clamp to the last chapter so a button
+      // never scrolls to nowhere.
+      const index = Math.max(0, Math.min(raw, ranges.length - 1));
       const [start, end] = ranges[index];
       // t where the chapter text sits vertically centred (y === 0):
       // the first chapter settles at t≈0.85, the rest at their midpoint.

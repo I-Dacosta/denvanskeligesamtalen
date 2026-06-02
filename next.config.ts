@@ -21,6 +21,14 @@ const nextConfig: NextConfig = {
   },
   // Packages that must run on the Node server, not be bundled
   serverExternalPackages: ['sharp', 'onnxruntime-node'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.public.blob.vercel-storage.com',
+      },
+    ],
+  },
 };
 
 export default withPayload(nextConfig);

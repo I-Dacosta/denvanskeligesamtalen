@@ -22,9 +22,15 @@ type HeroData = {
   };
   sponsor: {
     heading: string;
-    logo?: { url: string; alt: string };
-    name: string;
-    subtitle: string;
+    items?: Array<{
+      logo?: { url: string; alt?: string };
+      name?: string;
+      url?: string;
+    }>;
+    // legacy single-sponsor fields (kept for backward compatibility)
+    logo?: { url: string; alt?: string };
+    name?: string;
+    subtitle?: string;
   };
 };
 
@@ -48,19 +54,24 @@ export function HeroSliced({ data }: { data?: HeroData }) {
       imageCredit: "Foto: Marte Aas",
     },
     navigationItems: [
-      { number: "01", label: "Om Prosjektet" },
-      { number: "02", label: "Podkast" },
-      { number: "03", label: "Performance" },
-      { number: "04", label: "Teater" },
+      { number: "01", label: "Podkast" },
+      { number: "02", label: "Performance" },
+      { number: "03", label: "Teater" },
     ],
     sponsor: {
       heading: "Støttet av",
-      name: "Fritt Ord",
-      subtitle: "Stiftelsen",
     },
   };
-  
+
   const theme = heroData.theme || {};
+
+  // Prefer the new multi-sponsor array; fall back to the legacy single logo.
+  const sponsorItems =
+    heroData.sponsor.items && heroData.sponsor.items.length > 0
+      ? heroData.sponsor.items
+      : heroData.sponsor.logo
+        ? [{ logo: heroData.sponsor.logo, name: heroData.sponsor.name }]
+        : [{ name: heroData.sponsor.name }];
 
   return (
     <section
@@ -110,20 +121,18 @@ export function HeroSliced({ data }: { data?: HeroData }) {
              transition={{ delay: 0.5, duration: 1 }}
              className="mt-16 flex flex-col gap-3 text-xs md:text-sm text-neutral-500 uppercase tracking-widest font-mono"
            >
-             {heroData.navigationItems
-               .slice(1)
-               .map((item, i) => (
-                 <button
-                   key={item.number}
-                   type="button"
-                   onClick={() => scrollToChapter(i)}
-                   className="group flex items-center gap-4 text-left uppercase tracking-widest transition-colors hover:text-neutral-900"
-                 >
-                    <span className="text-neutral-400">{item.number}</span>
-                    <div className="h-[1px] w-8 bg-neutral-300 transition-all group-hover:w-12 group-hover:bg-neutral-900"></div>
-                    <span>{item.label}</span>
-                 </button>
-               ))}
+             {heroData.navigationItems.map((item, i) => (
+               <button
+                 key={item.number || i}
+                 type="button"
+                 onClick={() => scrollToChapter(i)}
+                 className="group flex items-center gap-4 text-left uppercase tracking-widest transition-colors hover:text-neutral-900"
+               >
+                  <span className="text-neutral-400">{item.number}</span>
+                  <div className="h-[1px] w-8 bg-neutral-300 transition-all group-hover:w-12 group-hover:bg-neutral-900"></div>
+                  <span>{item.label}</span>
+               </button>
+             ))}
            </motion.div>
 
            <motion.div 
@@ -135,24 +144,31 @@ export function HeroSliced({ data }: { data?: HeroData }) {
              <p className="text-xs text-neutral-400 uppercase tracking-wider mb-3">
                {heroData.sponsor.heading}
              </p>
-             <div className="flex items-center gap-4">
-               {heroData.sponsor.logo ? (
-                 <Image 
-                   src={heroData.sponsor.logo.url} 
-                   alt={heroData.sponsor.logo.alt || heroData.sponsor.name} 
-                   width={80} 
-                   height={80}
-                   className="opacity-80 hover:opacity-100 transition-opacity"
-                 />
-               ) : (
-                 <Image 
-                   src="/images/fritt-ord.png" 
-                   alt="Fritt Ord Logo" 
-                   width={80} 
-                   height={80}
-                   className="opacity-80 hover:opacity-100 transition-opacity"
-                 />
-               )}
+             <div className="flex flex-wrap items-center gap-8">
+               {sponsorItems.map((sponsor, i) => {
+                 const src = sponsor.logo?.url || "/images/fritt-ord.png";
+                 const alt = sponsor.logo?.alt || sponsor.name || "Sponsor";
+                 const logo = (
+                   /* eslint-disable-next-line @next/next/no-img-element */
+                   <img
+                     src={src}
+                     alt={alt}
+                     className="h-14 w-auto object-contain opacity-80 transition-opacity hover:opacity-100"
+                   />
+                 );
+                 return sponsor.url ? (
+                   <a
+                     key={i}
+                     href={sponsor.url}
+                     target="_blank"
+                     rel="noopener noreferrer"
+                   >
+                     {logo}
+                   </a>
+                 ) : (
+                   <React.Fragment key={i}>{logo}</React.Fragment>
+                 );
+               })}
              </div>
            </motion.div>
         </div>

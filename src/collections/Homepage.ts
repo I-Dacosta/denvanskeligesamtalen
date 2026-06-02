@@ -90,6 +90,13 @@ export const Homepage: CollectionConfig = {
       label: 'Navigation Items',
       minRows: 1,
       maxRows: 10,
+      admin: {
+        description:
+          'Each item becomes a button under the hero. Buttons scroll to story chapters 1, 2, 3 … in order.',
+        components: {
+          RowLabel: '/components/admin/NavRowLabel#NavRowLabel',
+        },
+      },
       fields: [
         {
           name: 'number',
@@ -105,10 +112,9 @@ export const Homepage: CollectionConfig = {
         },
       ],
       defaultValue: [
-        { number: '01', label: 'Om Prosjektet' },
-        { number: '02', label: 'Podkast' },
-        { number: '03', label: 'Performance' },
-        { number: '04', label: 'Teater' },
+        { number: '01', label: 'Podkast' },
+        { number: '02', label: 'Performance' },
+        { number: '03', label: 'Teater' },
       ],
     },
     {
@@ -123,22 +129,33 @@ export const Homepage: CollectionConfig = {
           defaultValue: 'Støttet av',
         },
         {
-          name: 'logo',
-          type: 'upload',
-          relationTo: 'media',
-          label: 'Sponsor Logo',
-        },
-        {
-          name: 'name',
-          type: 'text',
-          label: 'Sponsor Name',
-          defaultValue: 'Fritt Ord',
-        },
-        {
-          name: 'subtitle',
-          type: 'text',
-          label: 'Subtitle',
-          defaultValue: 'Stiftelsen',
+          name: 'items',
+          type: 'array',
+          label: 'Sponsors',
+          labels: { singular: 'Sponsor', plural: 'Sponsors' },
+          admin: {
+            description:
+              'Add one row per sponsor — logos are shown side by side, horizontally.',
+          },
+          fields: [
+            {
+              name: 'logo',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Logo',
+              required: true,
+            },
+            {
+              name: 'name',
+              type: 'text',
+              label: 'Name (used as image alt text)',
+            },
+            {
+              name: 'url',
+              type: 'text',
+              label: 'Website (optional)',
+            },
+          ],
         },
       ],
     },
