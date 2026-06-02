@@ -96,7 +96,6 @@ export const Homepage: CollectionConfig = {
           fields: [
             colorField('backgroundColor', 'Background color'),
             colorField('textColor', 'Heading text color'),
-            colorField('accentColor', 'Accent color'),
           ],
         },
       ],

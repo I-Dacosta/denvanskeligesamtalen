@@ -22,7 +22,6 @@ type HeroData = {
   theme?: {
     backgroundColor?: string;
     textColor?: string;
-    accentColor?: string;
   };
   sponsor: {
     heading: string;
@@ -95,7 +94,6 @@ export function HeroSliced({
            >
              <h2
                className="text-sm md:text-base font-bold tracking-[0.2em] text-neutral-500 uppercase mb-6"
-               style={theme.accentColor ? { color: theme.accentColor } : undefined}
              >
                 {heroData.hero.subtitle}
              </h2>

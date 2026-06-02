@@ -25,7 +25,6 @@ export const StoryChapters: CollectionConfig = {
       name: 'subtitle',
       type: 'text',
       label: 'Subtitle',
-      required: true,
     },
     {
       name: 'titleLine1',
@@ -37,7 +36,6 @@ export const StoryChapters: CollectionConfig = {
       name: 'titleLine2',
       type: 'text',
       label: 'Title Line 2',
-      required: true,
     },
     {
       name: 'text',
@@ -45,28 +43,9 @@ export const StoryChapters: CollectionConfig = {
       label: 'Description Text',
       required: true,
     },
-    {
-      name: 'highlight',
-      type: 'text',
-      label: 'Highlighted Text',
-      required: true,
-      admin: {
-        description: 'Key phrase to highlight in this chapter',
-      },
-    },
-    {
-      type: 'row',
-      fields: [
-        colorField('highlightColor', 'Highlight color', {
-          admin: {
-            description: 'Color of the highlighted phrase (default: blue).',
-          },
-        }),
-        colorField('textColor', 'Text color', {
-          admin: { description: 'Chapter text color (default: dark).' },
-        }),
-      ],
-    },
+    colorField('textColor', 'Text color', {
+      admin: { description: 'Chapter text color (default: dark).' },
+    }),
     {
       name: 'weight',
       type: 'number',

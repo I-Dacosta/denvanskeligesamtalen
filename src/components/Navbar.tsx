@@ -77,7 +77,8 @@ export function Navbar({
           {!isHome && (
             <Link
               href="/"
-              className="group flex items-center gap-2 hover:opacity-70 transition-opacity"
+              aria-label="Tilbake til forsiden"
+              className="group flex items-center hover:opacity-70 transition-opacity"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -86,13 +87,12 @@ export function Navbar({
                 strokeWidth={2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-4 h-4 md:w-5 md:h-5"
+                className="w-5 h-5 md:w-6 md:h-6"
                 aria-hidden="true"
               >
-                <path d="M3 11.5 12 4l9 7.5" />
-                <path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9" />
+                <path d="M19 12H5" />
+                <path d="m12 19-7-7 7-7" />
               </svg>
-              <span>Forside</span>
             </Link>
           )}
         </div>
