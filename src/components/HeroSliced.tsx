@@ -24,10 +24,10 @@ type HeroData = {
 export function HeroSliced({ data }: { data?: HeroData }) {
   const slices = 5;
 
-  const scrollToChapter = (chapterId: string) => {
-    document
-      .getElementById(chapterId)
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const scrollToChapter = (index: number) => {
+    window.dispatchEvent(
+      new CustomEvent("dvs:scroll-to-chapter", { detail: index })
+    );
   };
   // Horizontal offsets to create a "broken" staggered effect
   const offsets = ["0%", "1%", "-1%", "1%", "-1%"];
@@ -92,7 +92,7 @@ export function HeroSliced({ data }: { data?: HeroData }) {
                  <button
                    key={item.number}
                    type="button"
-                   onClick={() => scrollToChapter(`chapter-${i + 1}`)}
+                   onClick={() => scrollToChapter(i)}
                    className="group flex items-center gap-4 text-left uppercase tracking-widest transition-colors hover:text-neutral-900"
                  >
                     <span className="text-neutral-400">{item.number}</span>

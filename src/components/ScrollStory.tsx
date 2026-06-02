@@ -340,6 +340,40 @@ export function ScrollStory({ data }: { data?: ChapterData[] }) {
     offset: ["start end", "end end"],
   });
 
+  // Keep the latest ranges available to the (stable) scroll handler.
+  const rangesRef = React.useRef(CHAPTER_RANGES);
+  rangesRef.current = CHAPTER_RANGES;
+
+  // Buttons elsewhere on the page ask us to scroll a given chapter to the
+  // centre of the screen. Because the visible text is positioned by weighted
+  // scroll-progress ranges (not by the scaffold's <li> heights), we translate
+  // the target chapter's range into an exact scroll offset instead of using
+  // scrollIntoView, which would overshoot.
+  React.useEffect(() => {
+    const handler = (event: Event) => {
+      const index = (event as CustomEvent<number>).detail;
+      const container = containerRef.current;
+      const ranges = rangesRef.current;
+      if (!container || typeof index !== "number" || !ranges[index]) return;
+
+      const [start, end] = ranges[index];
+      // t where the chapter text sits vertically centred (y === 0):
+      // the first chapter settles at t≈0.85, the rest at their midpoint.
+      const centerT = index === 0 ? 0.85 : 0.5;
+      const progress = start + centerT * (end - start);
+
+      const rect = container.getBoundingClientRect();
+      const containerTop = rect.top + window.scrollY;
+      const top =
+        containerTop - window.innerHeight + progress * container.offsetHeight;
+
+      window.scrollTo({ top, behavior: "smooth" });
+    };
+
+    window.addEventListener("dvs:scroll-to-chapter", handler);
+    return () => window.removeEventListener("dvs:scroll-to-chapter", handler);
+  }, []);
+
   return (
     <section className="relative w-full bg-white text-neutral-950">
         <div className="relative mx-auto max-w-[100vw]">
