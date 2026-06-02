@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { colorField } from '../fields/color'
 
 export const Homepage: CollectionConfig = {
   slug: 'homepage',
@@ -39,8 +40,17 @@ export const Homepage: CollectionConfig = {
         {
           name: 'description',
           type: 'textarea',
-          label: 'Description',
+          label: 'Description (plain)',
           defaultValue: 'En kunstnerisk utforskning av dialogens potensiale.',
+          admin: {
+            description:
+              'Used only if the rich description below is left empty.',
+          },
+        },
+        {
+          name: 'descriptionRich',
+          type: 'richText',
+          label: 'Description (rich text — fonts, sizes, colors)',
         },
         {
           name: 'image',
@@ -53,6 +63,24 @@ export const Homepage: CollectionConfig = {
           type: 'text',
           label: 'Image Credit',
           defaultValue: 'Foto: Marte Aas',
+        },
+      ],
+    },
+    {
+      name: 'theme',
+      type: 'group',
+      label: 'Colors',
+      admin: {
+        description: 'Optional color overrides for the hero section.',
+      },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            colorField('backgroundColor', 'Background color'),
+            colorField('textColor', 'Heading text color'),
+            colorField('accentColor', 'Accent color'),
+          ],
         },
       ],
     },

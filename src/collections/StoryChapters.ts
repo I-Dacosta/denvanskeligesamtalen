@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { colorField } from '../fields/color'
 
 export const StoryChapters: CollectionConfig = {
   slug: 'story-chapters',
@@ -52,6 +53,19 @@ export const StoryChapters: CollectionConfig = {
       admin: {
         description: 'Key phrase to highlight in this chapter',
       },
+    },
+    {
+      type: 'row',
+      fields: [
+        colorField('highlightColor', 'Highlight color', {
+          admin: {
+            description: 'Color of the highlighted phrase (default: blue).',
+          },
+        }),
+        colorField('textColor', 'Text color', {
+          admin: { description: 'Chapter text color (default: dark).' },
+        }),
+      ],
     },
     {
       name: 'weight',

@@ -3,16 +3,23 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { RichText } from "@/components/RichText";
 
 type HeroData = {
   hero: {
     subtitle: string;
     mainTitle: string;
     description: string;
+    descriptionRich?: unknown;
     image?: { url: string; alt: string };
     imageCredit?: string;
   };
   navigationItems: Array<{ number: string; label: string }>;
+  theme?: {
+    backgroundColor?: string;
+    textColor?: string;
+    accentColor?: string;
+  };
   sponsor: {
     heading: string;
     logo?: { url: string; alt: string };
@@ -53,8 +60,13 @@ export function HeroSliced({ data }: { data?: HeroData }) {
     },
   };
   
+  const theme = heroData.theme || {};
+
   return (
-    <section className="relative min-h-screen w-full bg-white text-neutral-950 flex items-center justify-center p-4 md:px-12 md:py-20 overflow-hidden">
+    <section
+      className="relative min-h-screen w-full bg-white text-neutral-950 flex items-center justify-center p-4 md:px-12 md:py-20 overflow-hidden"
+      style={theme.backgroundColor ? { backgroundColor: theme.backgroundColor } : undefined}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 w-full max-w-7xl h-full items-start">
         
         {/* Typography Left */}
@@ -64,10 +76,16 @@ export function HeroSliced({ data }: { data?: HeroData }) {
              animate={{ opacity: 1, x: 0 }}
              transition={{ duration: 0.8, ease: "easeOut" }}
            >
-             <h2 className="text-sm md:text-base font-bold tracking-[0.2em] text-neutral-500 uppercase mb-6">
+             <h2
+               className="text-sm md:text-base font-bold tracking-[0.2em] text-neutral-500 uppercase mb-6"
+               style={theme.accentColor ? { color: theme.accentColor } : undefined}
+             >
                 {heroData.hero.subtitle}
              </h2>
-             <h1 className="text-5xl md:text-6xl xl:text-8xl font-bold uppercase tracking-tighter leading-[0.85] text-neutral-900">
+             <h1
+               className="text-5xl md:text-6xl xl:text-8xl font-bold uppercase tracking-tighter leading-[0.85] text-neutral-900"
+               style={theme.textColor ? { color: theme.textColor } : undefined}
+             >
                {heroData.hero.mainTitle.split('\n').map((line, i) => (
                  <React.Fragment key={i}>
                    {line}
@@ -75,9 +93,15 @@ export function HeroSliced({ data }: { data?: HeroData }) {
                  </React.Fragment>
                ))}
              </h1>
-             <p className="mt-10 text-lg md:text-xl text-neutral-600 max-w-md font-light leading-relaxed">
-               {heroData.hero.description}
-             </p>
+             {heroData.hero.descriptionRich ? (
+               <div className="rich-text mt-10 text-lg md:text-xl text-neutral-600 max-w-md font-light leading-relaxed">
+                 <RichText data={heroData.hero.descriptionRich as never} />
+               </div>
+             ) : (
+               <p className="mt-10 text-lg md:text-xl text-neutral-600 max-w-md font-light leading-relaxed">
+                 {heroData.hero.description}
+               </p>
+             )}
            </motion.div>
 
            <motion.div 

@@ -12,6 +12,7 @@ export default async function Home() {
   let homepage = null;
   let navigation = null;
   let chapters = null;
+  let pages: Array<{ title: string; slug: string }> = [];
 
   try {
     const payload = await getPayload({ config });
@@ -34,9 +35,21 @@ export default async function Home() {
       sort: "order",
     });
 
+    // Fetch published Pages for the menu
+    const pagesData = await payload.find({
+      collection: "pages",
+      where: { published: { equals: true } },
+      sort: "title",
+      limit: 50,
+    });
+
     homepage = homepageData.docs[0] || null;
     navigation = navigationData.docs[0] || null;
     chapters = storyChaptersData.docs || null;
+    pages = pagesData.docs.map((p: { title: string; slug: string }) => ({
+      title: p.title,
+      slug: p.slug,
+    }));
   } catch (error) {
     console.error("Error fetching Payload data:", error);
     // Components will use fallback data
@@ -44,7 +57,7 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-white">
-      <Navbar data={navigation} />
+      <Navbar data={navigation} pages={pages} />
       <HeroSliced data={homepage} />
       <ScrollStory data={chapters} />
     </main>

@@ -22,7 +22,15 @@ type NavData = {
   }>;
 };
 
-export function Navbar({ data }: { data?: NavData }) {
+type PageLink = { title: string; slug: string };
+
+export function Navbar({
+  data,
+  pages = [],
+}: {
+  data?: NavData;
+  pages?: PageLink[];
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const navData = data || {
@@ -106,7 +114,30 @@ export function Navbar({ data }: { data?: NavData }) {
             </div>
 
             <div className="min-h-screen w-full max-w-5xl mx-auto px-6 py-24 md:py-32 flex flex-col gap-24">
-              
+
+              {/* Page links */}
+              {pages.length > 0 && (
+                <nav className="flex flex-col gap-3">
+                  <Link
+                    href="/"
+                    onClick={() => setIsOpen(false)}
+                    className="text-2xl md:text-3xl font-light text-neutral-900 hover:text-neutral-500 transition-colors w-fit"
+                  >
+                    Forside
+                  </Link>
+                  {pages.map((page) => (
+                    <Link
+                      key={page.slug}
+                      href={`/${page.slug}`}
+                      onClick={() => setIsOpen(false)}
+                      className="text-2xl md:text-3xl font-light text-neutral-900 hover:text-neutral-500 transition-colors w-fit"
+                    >
+                      {page.title}
+                    </Link>
+                  ))}
+                </nav>
+              )}
+
               {/* Project Section (Primary Focus) */}
               <section className="max-w-3xl">
                 <motion.div

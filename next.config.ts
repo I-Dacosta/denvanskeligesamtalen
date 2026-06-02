@@ -19,10 +19,8 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
-  // Force clean build
-  experimental: {
-    serverComponentsExternalPackages: ['sharp', 'onnxruntime-node'],
-  },
+  // Packages that must run on the Node server, not be bundled
+  serverExternalPackages: ['sharp', 'onnxruntime-node'],
 };
 
 export default withPayload(nextConfig);

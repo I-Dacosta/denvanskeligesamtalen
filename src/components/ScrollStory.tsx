@@ -15,6 +15,8 @@ type Chapter = {
   titleLines: string[];
   text: string;
   highlight: string;
+  highlightColor?: string;
+  textColor?: string;
 };
 
 type ChapterData = {
@@ -25,6 +27,8 @@ type ChapterData = {
   text: string;
   highlight: string;
   weight: number;
+  highlightColor?: string;
+  textColor?: string;
 };
 
 const defaultChapters: Chapter[] = [
@@ -146,7 +150,7 @@ function ChapterText({
   return (
     <motion.div
       className="absolute left-1/2 top-1/2 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2"
-      style={{ opacity, y }}
+      style={{ opacity, y, color: chapter.textColor || undefined }}
     >
       <div className="mb-6 overflow-clip font-mono text-xs uppercase tracking-[0.28em] text-neutral-500">
         <MaskedLine t={t}>{chapter.subtitle}</MaskedLine>
@@ -173,7 +177,7 @@ function ChapterText({
 
       <div className="mx-auto mt-6 max-w-xl overflow-clip text-sm leading-relaxed text-neutral-700 md:text-base">
         <MaskedLine t={t} delay={0.08} className="text-balance">
-          {renderHighlightText(chapter.text, chapter.highlight)}
+          {renderHighlightText(chapter.text, chapter.highlight, chapter.highlightColor)}
         </MaskedLine>
       </div>
     </motion.div>
@@ -208,7 +212,11 @@ function FixedTextLayer({
   );
 }
 
-function renderHighlightText(text: string, highlight: string) {
+function renderHighlightText(
+  text: string,
+  highlight: string,
+  highlightColor?: string
+) {
   const parts = text.split(highlight);
   if (parts.length === 1) return text;
 
@@ -218,7 +226,12 @@ function renderHighlightText(text: string, highlight: string) {
         <React.Fragment key={idx}>
           {p}
           {idx < parts.length - 1 && (
-            <span className="text-blue-600 font-medium">{highlight}</span>
+            <span
+              className="font-medium"
+              style={{ color: highlightColor || "#2563eb" }}
+            >
+              {highlight}
+            </span>
           )}
         </React.Fragment>
       ))}
@@ -310,6 +323,8 @@ export function ScrollStory({ data }: { data?: ChapterData[] }) {
         titleLines: [ch.titleLine1, ch.titleLine2],
         text: ch.text,
         highlight: ch.highlight,
+        highlightColor: ch.highlightColor,
+        textColor: ch.textColor,
       }));
   }, [data]);
 
