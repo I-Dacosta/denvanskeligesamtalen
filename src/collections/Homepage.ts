@@ -149,6 +149,12 @@ export const Homepage: CollectionConfig = {
           defaultValue: 'Støttet av',
         },
         {
+          name: 'footnote',
+          type: 'text',
+          label: 'Footnote (centered text under logos)',
+          defaultValue: 'under utvikling',
+        },
+        {
           name: 'items',
           type: 'array',
           label: 'Sponsors',

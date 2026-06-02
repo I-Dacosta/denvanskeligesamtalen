@@ -1,6 +1,6 @@
-import { ScrollStory } from "@/components/ScrollStory";
 import { HeroSliced } from "@/components/HeroSliced";
 import { Navbar } from "@/components/Navbar";
+import { slugify } from "@/lib/slugify";
 import { getPayload } from "payload";
 import config from "@payload-config";
 
@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   let homepage = null;
   let navigation = null;
-  let chapters = null;
+  let chapterLinks: Array<{ label: string; slug: string }> = [];
   let pages: Array<{ title: string; slug: string }> = [];
 
   try {
@@ -45,7 +45,12 @@ export default async function Home() {
 
     homepage = homepageData.docs[0] || null;
     navigation = navigationData.docs[0] || null;
-    chapters = storyChaptersData.docs || null;
+    chapterLinks = (storyChaptersData.docs || []).map(
+      (c: { subtitle: string }) => ({
+        label: c.subtitle,
+        slug: slugify(c.subtitle),
+      })
+    );
     pages = pagesData.docs.map((p: { title: string; slug: string }) => ({
       title: p.title,
       slug: p.slug,
@@ -58,8 +63,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-white">
       <Navbar data={navigation} pages={pages} />
-      <HeroSliced data={homepage} />
-      <ScrollStory data={chapters} />
+      <HeroSliced data={homepage} chapterLinks={chapterLinks} />
     </main>
   );
 }

@@ -2,8 +2,12 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { RichText } from "@/components/RichText";
+import { slugify } from "@/lib/slugify";
+
+type ChapterLink = { label: string; slug: string };
 
 type HeroData = {
   hero: {
@@ -22,6 +26,7 @@ type HeroData = {
   };
   sponsor: {
     heading: string;
+    footnote?: string;
     items?: Array<{
       logo?: { url: string; alt?: string };
       name?: string;
@@ -34,14 +39,15 @@ type HeroData = {
   };
 };
 
-export function HeroSliced({ data }: { data?: HeroData }) {
+export function HeroSliced({
+  data,
+  chapterLinks = [],
+}: {
+  data?: HeroData;
+  chapterLinks?: ChapterLink[];
+}) {
   const slices = 5;
 
-  const scrollToChapter = (index: number) => {
-    window.dispatchEvent(
-      new CustomEvent("dvs:scroll-to-chapter", { detail: index })
-    );
-  };
   // Horizontal offsets to create a "broken" staggered effect
   const offsets = ["0%", "1%", "-1%", "1%", "-1%"];
   
@@ -121,18 +127,27 @@ export function HeroSliced({ data }: { data?: HeroData }) {
              transition={{ delay: 0.5, duration: 1 }}
              className="mt-16 flex flex-col gap-3 text-xs md:text-sm text-neutral-500 uppercase tracking-widest font-mono"
            >
-             {heroData.navigationItems.map((item, i) => (
-               <button
-                 key={item.number || i}
-                 type="button"
-                 onClick={() => scrollToChapter(i)}
-                 className="group flex items-center gap-4 text-left uppercase tracking-widest transition-colors hover:text-neutral-900"
-               >
-                  <span className="text-neutral-400">{item.number}</span>
-                  <div className="h-[1px] w-8 bg-neutral-300 transition-all group-hover:w-12 group-hover:bg-neutral-900"></div>
-                  <span>{item.label}</span>
-               </button>
-             ))}
+             {heroData.navigationItems.map((item, i) => {
+               // Prefer a chapter whose subtitle matches the button label;
+               // otherwise fall back to position, then to the last chapter.
+               const byLabel = chapterLinks.find(
+                 (c) => c.slug === slugify(item.label)
+               );
+               const target =
+                 byLabel || chapterLinks[i] || chapterLinks[chapterLinks.length - 1];
+               const href = target ? `/kapittel/${target.slug}` : "/";
+               return (
+                 <Link
+                   key={item.number || i}
+                   href={href}
+                   className="group flex items-center gap-4 text-left uppercase tracking-widest transition-colors hover:text-neutral-900"
+                 >
+                    <span className="text-neutral-400">{item.number}</span>
+                    <div className="h-[1px] w-8 bg-neutral-300 transition-all group-hover:w-12 group-hover:bg-neutral-900"></div>
+                    <span>{item.label}</span>
+                 </Link>
+               );
+             })}
            </motion.div>
 
            <motion.div 
@@ -144,6 +159,7 @@ export function HeroSliced({ data }: { data?: HeroData }) {
              <p className="text-xs text-neutral-400 uppercase tracking-wider mb-3">
                {heroData.sponsor.heading}
              </p>
+             <div className="w-fit">
              <div className="flex flex-wrap items-center gap-8">
                {sponsorItems.map((sponsor, i) => {
                  const src = sponsor.logo?.url || "/images/fritt-ord.png";
@@ -169,6 +185,10 @@ export function HeroSliced({ data }: { data?: HeroData }) {
                    <React.Fragment key={i}>{logo}</React.Fragment>
                  );
                })}
+             </div>
+             <p className="mt-3 text-xs text-neutral-400 uppercase tracking-wider text-center">
+               {heroData.sponsor.footnote || "under utvikling"}
+             </p>
              </div>
            </motion.div>
         </div>
