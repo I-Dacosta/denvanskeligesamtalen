@@ -33,8 +33,11 @@ export default buildConfig({
   }),
   sharp,
   plugins: [],
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'),
+  // Leave serverURL undefined in local dev so Payload emits relative media
+  // URLs (e.g. /api/media/file/...). Absolute localhost URLs break whenever the
+  // dev server runs on a port other than 3000. In production we use the real URL.
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
   cors: [
     process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
     'https://denvanskeligesamtalen.org',

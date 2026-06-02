@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { slugify } from "@/lib/slugify";
 
 export type ChapterNavItem = {
-  subtitle: string;
+  subtitle?: string;
 };
 
 /**

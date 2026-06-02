@@ -115,10 +115,18 @@ export default function RootLayout({
             name: "Runa Carlsen",
           },
         ],
-        sponsor: {
-          "@type": "Organization",
-          name: "Fritt Ord",
-        },
+        sponsor: [
+          {
+            "@type": "Organization",
+            name: "Fritt Ord",
+            url: "https://frittord.no",
+          },
+          {
+            "@type": "Organization",
+            name: "Kulturrådet",
+            url: "https://www.kulturradet.no",
+          },
+        ],
       },
       {
         "@type": "WebSite",
@@ -150,10 +158,18 @@ export default function RootLayout({
         inLanguage: "nb-NO",
         genre: ["Performance Art", "Theater", "Podcast"],
         keywords: "dialog, performance, teater, podkast, kunst, Norge",
-        sponsor: {
-          "@type": "Organization",
-          name: "Fritt Ord",
-        },
+        sponsor: [
+          {
+            "@type": "Organization",
+            name: "Fritt Ord",
+            url: "https://frittord.no",
+          },
+          {
+            "@type": "Organization",
+            name: "Kulturrådet",
+            url: "https://www.kulturradet.no",
+          },
+        ],
       },
     ],
   };

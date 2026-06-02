@@ -150,7 +150,7 @@ export const Homepage: CollectionConfig = {
         {
           name: 'footnote',
           type: 'text',
-          label: 'Footnote (centered text under logos)',
+          label: 'Footnote (small text at the bottom, aligned with the image)',
           defaultValue: 'Webside under utvikling',
         },
         {
@@ -160,15 +160,25 @@ export const Homepage: CollectionConfig = {
           labels: { singular: 'Sponsor', plural: 'Sponsors' },
           admin: {
             description:
-              'Add one row per sponsor — logos are shown side by side, horizontally.',
+              'Add one row per sponsor — logos are shown side by side, horizontally. ' +
+              'Provide a logo either by uploading an image OR by entering a Logo URL ' +
+              '(e.g. /images/fritt-ord.png for a file in the public folder).',
           },
           fields: [
             {
               name: 'logo',
               type: 'upload',
               relationTo: 'media',
-              label: 'Logo',
-              required: true,
+              label: 'Logo (upload)',
+            },
+            {
+              name: 'logoUrl',
+              type: 'text',
+              label: 'Logo URL (alternative to upload)',
+              admin: {
+                description:
+                  'Used when no logo is uploaded. Accepts a path like /images/fritt-ord.png or a full https:// URL.',
+              },
             },
             {
               name: 'name',

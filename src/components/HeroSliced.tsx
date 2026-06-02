@@ -9,6 +9,28 @@ import { slugify } from "@/lib/slugify";
 
 type ChapterLink = { label: string; slug: string };
 
+type SponsorItem = {
+  logo?: { url: string; alt?: string };
+  logoUrl?: string;
+  name?: string;
+  url?: string;
+};
+
+// Shown when the CMS has no sponsors configured yet. Editors can override
+// these by adding rows to the Sponsor Section in the admin panel.
+const DEFAULT_SPONSORS: SponsorItem[] = [
+  {
+    logoUrl: "/images/fritt-ord.png",
+    name: "Fritt Ord",
+    url: "https://frittord.no",
+  },
+  {
+    logoUrl: "/images/kulturradet.png",
+    name: "Kulturrådet",
+    url: "https://www.kulturradet.no",
+  },
+];
+
 type HeroData = {
   hero: {
     subtitle: string;
@@ -26,11 +48,7 @@ type HeroData = {
   sponsor: {
     heading: string;
     footnote?: string;
-    items?: Array<{
-      logo?: { url: string; alt?: string };
-      name?: string;
-      url?: string;
-    }>;
+    items?: SponsorItem[];
     // legacy single-sponsor fields (kept for backward compatibility)
     logo?: { url: string; alt?: string };
     name?: string;
@@ -70,13 +88,14 @@ export function HeroSliced({
 
   const theme = heroData.theme || {};
 
-  // Prefer the new multi-sponsor array; fall back to the legacy single logo.
-  const sponsorItems =
+  // Prefer the multi-sponsor array from the CMS; fall back to a legacy single
+  // logo, then to the built-in defaults (Fritt Ord + Kulturrådet).
+  const sponsorItems: SponsorItem[] =
     heroData.sponsor.items && heroData.sponsor.items.length > 0
       ? heroData.sponsor.items
       : heroData.sponsor.logo
         ? [{ logo: heroData.sponsor.logo, name: heroData.sponsor.name }]
-        : [{ name: heroData.sponsor.name }];
+        : DEFAULT_SPONSORS;
 
   return (
     <section
@@ -157,10 +176,10 @@ export function HeroSliced({
              <p className="text-xs text-neutral-400 uppercase tracking-wider mb-3">
                {heroData.sponsor.heading}
              </p>
-             <div className="w-fit">
              <div className="flex flex-wrap items-center gap-8">
                {sponsorItems.map((sponsor, i) => {
-                 const src = sponsor.logo?.url || "/images/fritt-ord.png";
+                 const src =
+                   sponsor.logo?.url || sponsor.logoUrl || "/images/fritt-ord.png";
                  const alt = sponsor.logo?.alt || sponsor.name || "Sponsor";
                  const logo = (
                    /* eslint-disable-next-line @next/next/no-img-element */
@@ -184,11 +203,18 @@ export function HeroSliced({
                  );
                })}
              </div>
-             <p className="relative top-22 mt-3 text-xs text-neutral-400 uppercase tracking-wider text-center">
-               {heroData.sponsor.footnote || "Webside under utvikling"}
-             </p>
-             </div>
            </motion.div>
+
+           {/* Footnote pinned to the bottom of the column (mt-auto) so it lines
+               up with the bottom of the sliced image in the right column. */}
+           <motion.p
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             transition={{ delay: 1, duration: 1 }}
+             className="mt-auto pt-8 text-xs text-neutral-400 uppercase tracking-wider"
+           >
+             {heroData.sponsor.footnote || "Webside under utvikling"}
+           </motion.p>
         </div>
 
         {/* Sliced Image Right */}
@@ -222,7 +248,9 @@ export function HeroSliced({
             ))}
           </div>
           {heroData.hero.imageCredit && (
-            <p className="mt-1 md:mt-2 text-neutral-400 text-sm">{heroData.hero.imageCredit}</p>
+            <p className="mt-1 md:mt-2 text-neutral-400 text-sm lg:absolute lg:left-0 lg:top-full lg:mt-2">
+              {heroData.hero.imageCredit}
+            </p>
           )}
         </div>
       </div>

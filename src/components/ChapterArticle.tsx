@@ -1,34 +1,14 @@
-import React from "react";
+import { PlayButton } from "@/components/PlayButton";
 
 export type Chapter = {
-  subtitle: string;
+  subtitle?: string;
   titleLine1: string;
   titleLine2?: string;
   text: string;
-  highlight?: string;
-  highlightColor?: string;
   textColor?: string;
+  showPlayButton?: boolean;
+  podcastUrl?: string;
 };
-
-function renderHighlight(text: string, highlight?: string, color?: string) {
-  if (!highlight) return text;
-  const parts = text.split(highlight);
-  if (parts.length === 1) return text;
-  return (
-    <>
-      {parts.map((p, idx) => (
-        <React.Fragment key={idx}>
-          {p}
-          {idx < parts.length - 1 && (
-            <span className="font-medium" style={{ color: color || "#2563eb" }}>
-              {highlight}
-            </span>
-          )}
-        </React.Fragment>
-      ))}
-    </>
-  );
-}
 
 export function ChapterArticle({ chapter }: { chapter: Chapter }) {
   return (
@@ -37,9 +17,11 @@ export function ChapterArticle({ chapter }: { chapter: Chapter }) {
         className="w-full max-w-2xl text-center"
         style={chapter.textColor ? { color: chapter.textColor } : undefined}
       >
-        <p className="mb-6 font-mono text-xs uppercase tracking-[0.28em] text-neutral-500">
-          {chapter.subtitle}
-        </p>
+        {chapter.subtitle ? (
+          <p className="mb-6 font-mono text-xs uppercase tracking-[0.28em] text-neutral-500">
+            {chapter.subtitle}
+          </p>
+        ) : null}
         <h1
           className="font-medium tracking-tight text-neutral-900"
           style={{ fontSize: "clamp(32px, 5vw, 64px)", lineHeight: 1.02 }}
@@ -53,8 +35,11 @@ export function ChapterArticle({ chapter }: { chapter: Chapter }) {
           ) : null}
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-neutral-700 md:text-lg">
-          {renderHighlight(chapter.text, chapter.highlight, chapter.highlightColor)}
+          {chapter.text}
         </p>
+        {chapter.showPlayButton ? (
+          <PlayButton audioUrl={chapter.podcastUrl} />
+        ) : null}
       </div>
     </section>
   );

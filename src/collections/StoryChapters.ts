@@ -47,6 +47,26 @@ export const StoryChapters: CollectionConfig = {
       admin: { description: 'Chapter text color (default: dark).' },
     }),
     {
+      name: 'showPlayButton',
+      type: 'checkbox',
+      label: 'Show podcast play button',
+      defaultValue: false,
+      admin: {
+        description:
+          'Show a "Hør på podkasten" play button on this chapter (e.g. the Åtte Episoder chapter).',
+      },
+    },
+    {
+      name: 'podcastUrl',
+      type: 'text',
+      label: 'Podcast / audio URL (optional)',
+      admin: {
+        condition: (_, siblingData) => Boolean(siblingData?.showPlayButton),
+        description:
+          'If set, the play button plays this audio. Leave empty for a visual-only button.',
+      },
+    },
+    {
       name: 'weight',
       type: 'number',
       label: 'Scroll Weight',
